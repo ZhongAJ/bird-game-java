@@ -90,14 +90,14 @@ public class Column extends JPanel {
             return false;
         }
     }
-    public boolean point1(Bird b){
-        if(b.x==x-44)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
+//    public boolean point1(Bird b){
+//        if(b.x==x-44)
+//        {
+//            return true;
+//        }
+//        else
+//        {
+//            return false;
+//        }
+//    }
 }

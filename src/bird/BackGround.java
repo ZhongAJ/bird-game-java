@@ -20,7 +20,8 @@ public class BackGround extends JPanel {
     int y;
     int width=432;
     int height=644;
-    BufferedImage bg,startimg,endimg,money;
+    BufferedImage bg,startimg,endimg;
+    Money money01, money02;
     Bird bird;
     Ground ground;
     boolean again=false;
@@ -43,6 +44,8 @@ public class BackGround extends JPanel {
                     startgame=false;
                     count=0;
                     m=0;
+                    money01.init();
+                    money02.init();
                     bird.initFly();
                     gameover=false;
                     try {
@@ -84,10 +87,15 @@ public class BackGround extends JPanel {
                 bird.fly();
                 c1.step();
                 c2.step();
+                money01.x = c1.x - money01.width / 2;
+                money01.y = c1.y - money01.height / 2;
+                money02.x = c2.x - money02.width / 2;
+                money02.y = c2.y - money02.height / 2;
             }
-            if(c1.point1(bird)||c2.point1(bird)){
-                m++;
-            }
+//            if(c1.point1(bird)||c2.point1(bird)){
+//                m++;
+//            }
+            m = money01.score + money02.score;
             if(c1.point(bird)||c2.point(bird)){
                 count++;
             }
@@ -111,9 +119,11 @@ public class BackGround extends JPanel {
         gameover=false;
         bird=new Bird();
         ground=new Ground();
-        money=ImageIO.read(
-                getClass().
-                        getResourceAsStream("/images/money.png"));
+        money01 = new Money();
+        money02 = new Money();
+//        money=ImageIO.read(
+//                getClass().
+//                        getResourceAsStream("/images/money.png"));
         bg=ImageIO.read(
                 getClass().
                         getResourceAsStream("/images/bg.png"));
@@ -149,11 +159,12 @@ public class BackGround extends JPanel {
         c2.paint(g);
         bird.paint(g);
         if(!c1.hitMoney(bird)&&c1.x>=bird.x){
-            g.drawImage(money, c1.x-22, c1.y-22, 44, 44,null);
+            //g.drawImage(money, c1.x-22, c1.y-22, 44, 44,null);
         }
         if(!c2.hitMoney(bird)&&c2.x>=bird.x){
-            g.drawImage(money, c2.x-22, c2.y-22, 44, 44,null);
+            //g.drawImage(money, c2.x-22, c2.y-22, 44, 44,null);
         }
+
         if(!startgame)
             g.drawImage(startimg, x, y, 432, 644,null);
 //		if(gameover)
@@ -163,6 +174,13 @@ public class BackGround extends JPanel {
         }
         if(ground.hitBird(bird)){
             g.drawImage(endimg, x, y, 432, 644,null);
+        }
+
+        if (!money01.hitBird(bird)) {
+            money01.paint(g);
+        }
+        if (!money02.hitBird(bird)) {
+            money02.paint(g);
         }
 
         ground.paint(g);
